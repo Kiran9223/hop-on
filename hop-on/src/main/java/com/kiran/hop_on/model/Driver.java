@@ -23,5 +23,5 @@ public class Driver {
 
     private String vehicle;
 
-    private boolean isActive;
+    private boolean isAvailable;
 }
