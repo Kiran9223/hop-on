@@ -9,6 +9,7 @@ import com.kiran.hop_on.repository.DriverRepository;
 import com.kiran.hop_on.repository.RideRepository;
 import com.kiran.hop_on.repository.RiderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.redis.connection.RedisGeoCommands;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RideService {
 
     private final RideRepository rideRepository;
@@ -45,6 +47,8 @@ public class RideService {
         double[] coords = parseCoordinates(pickupLocation);
         double longitude = coords[0];
         double latitude = coords[1];
+
+        log.info("Driver coords are : long=> "+longitude+" lat=> "+latitude);
 
         List<GeoResult<RedisGeoCommands.GeoLocation<String>>> nearbyDrivers =
                 driverLocationService.getNearbyDrivers(longitude, latitude, 5.0);
