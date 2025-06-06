@@ -18,4 +18,9 @@ public class KafkaTopicsConfig {
         return TopicBuilder.name("ride-accepted").build();
     }
 
+    @Bean
+    public NewTopic driverNotificationTopic() {
+        return TopicBuilder.name("driver-notifications").build();
+    }
+
 }

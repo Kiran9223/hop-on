@@ -3,6 +3,7 @@ package com.kiran.hop_on.kafka;
 import com.kiran.hop_on.model.Ride;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,11 @@ public class KafkaProducerService {
 
     public void publishRideAccepted(Ride ride) {
         kafkaTemplate.send("ride-accepted", ride);
+    }
+
+    public void notifyDriverOfRideRequest(String driverId, Ride ride) {
+        log.info("Notify driver " + driverId + " of ride request " + ride.getId());
+        kafkaTemplate.send("driver-notifications", driverId, ride);
     }
 
 }
