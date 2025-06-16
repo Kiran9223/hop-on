@@ -42,11 +42,11 @@ public class RideService {
         ride.setRequestedAt(LocalDateTime.now());
 
         Ride savedRide = rideRepository.save(ride);
-//        kafkaProducerService.publishRideRequested(savedRide);
+        kafkaProducerService.publishRideRequested(savedRide);
 
         double[] coords = parseCoordinates(pickupLocation);
-        double longitude = coords[0];
-        double latitude = coords[1];
+        double longitude = coords[1];
+        double latitude = coords[0];
 
         log.info("Driver coords are : long=> "+longitude+" lat=> "+latitude);
 
