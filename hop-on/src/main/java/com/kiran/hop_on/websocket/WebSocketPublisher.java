@@ -16,7 +16,7 @@ public class WebSocketPublisher {
     }
 
     public void notifyRider(String riderId, Object payload) {
-        String topic = "/topic/rider" + riderId;
+        String topic = "/topic/rider/" + riderId;
         messagingTemplate.convertAndSend(topic, payload);
     }
 

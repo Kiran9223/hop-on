@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Driver WebSocket Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+</head>
+<body>
+    <h2>WebSocket Client</h2>
+    <pre id="output"></pre>
+
+    <script>
+
+        const socket = new SockJS("http://localhost:8080/ws");
+        const stompClient = Stomp.over(socket);
+        <!-- stompClient.debug = null; -->
+
+        stompClient.connect({}, function () {
+            stompClient.subscribe("/topic/rider/2", function (message) {
+                document.getElementById("output").textContent += "📥 Ride accepted: " + message.body + "\n";
+            });
+        });
+    </script>
+</body>
+</html>
