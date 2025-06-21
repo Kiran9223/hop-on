@@ -1,6 +1,6 @@
 package com.kiran.hop_on.service;
 
-import com.kiran.hop_on.kafka.KafkaProducerService;
+import com.kiran.hop_on.service.kafka_producer.KafkaProducerService;
 import com.kiran.hop_on.model.Ride;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.GeoResult;

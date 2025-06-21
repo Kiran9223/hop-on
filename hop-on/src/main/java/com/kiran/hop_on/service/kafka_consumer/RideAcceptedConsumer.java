@@ -1,4 +1,4 @@
-package com.kiran.hop_on.kafka_consumer;
+package com.kiran.hop_on.service.kafka_consumer;
 
 import com.kiran.hop_on.model.Ride;
 import com.kiran.hop_on.websocket.WebSocketPublisher;

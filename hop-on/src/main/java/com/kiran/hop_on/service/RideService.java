@@ -1,7 +1,7 @@
 package com.kiran.hop_on.service;
 
 import com.kiran.hop_on.enumType.RideStatus;
-import com.kiran.hop_on.kafka.KafkaProducerService;
+import com.kiran.hop_on.service.kafka_producer.KafkaProducerService;
 import com.kiran.hop_on.model.Driver;
 import com.kiran.hop_on.model.Ride;
 import com.kiran.hop_on.model.Rider;
@@ -10,7 +10,6 @@ import com.kiran.hop_on.repository.RideRepository;
 import com.kiran.hop_on.repository.RiderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.kiran.hop_on.kafka;
+package com.kiran.hop_on.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
