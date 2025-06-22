@@ -1,6 +1,8 @@
 package com.kiran.hop_on.service;
 
 import com.kiran.hop_on.enumType.RideStatus;
+import com.kiran.hop_on.model.User;
+import com.kiran.hop_on.repository.UserRepository;
 import com.kiran.hop_on.service.kafka_producer.KafkaProducerService;
 import com.kiran.hop_on.model.Driver;
 import com.kiran.hop_on.model.Ride;
@@ -12,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.redis.connection.RedisGeoCommands;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,8 +33,8 @@ public class RideService {
     private final DriverLocationService driverLocationService;
     private final RideMatchingService rideMatchingService;
 
-    public Ride requestRide(long riderId, String pickupLocation, String dropLocation) {
-        Rider rider = riderRepository.findById(riderId)
+    public Ride requestRide(long userId, String pickupLocation, String dropLocation) {
+        Rider rider = riderRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Rider Not Found :("));
 
         Ride ride = new Ride();
@@ -64,11 +68,11 @@ public class RideService {
 
     }
 
-    public Ride acceptRide(long rideId, long driverId) {
+    public Ride acceptRide(long rideId, long userId) {
         Ride ride = rideRepository.findById(rideId)
                 .orElseThrow(() -> new RuntimeException("Ride not found"));
 
-        Driver driver = driverRepository.findById(driverId)
+        Driver driver = driverRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
         if (!driver.isAvailable()) {
@@ -97,5 +101,20 @@ public class RideService {
     private double[] parseCoordinates(String loc) {
         String[] split = loc.split(",");
         return new double[]{Double.parseDouble(split[0]), Double.parseDouble(split[1])};
+    }
+
+    public Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // 1. This works if 'sub' is correctly set in JWT
+        String userIdStr = authentication.getName(); // Should return "52", not "User(...)"
+        log.info(" ==================> get Name is ===== "+userIdStr);
+        // If you're accidentally getting the full User object as principal:
+        // check type and extract manually
+        if (authentication.getPrincipal() instanceof User user) {
+            return user.getId(); // ✅ safest if security config returns full user
+        }
+
+        return Long.parseLong(userIdStr); // ✅ fallback
     }
 }

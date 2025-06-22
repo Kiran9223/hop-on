@@ -3,8 +3,14 @@ package com.kiran.hop_on.service.auth;
 import com.kiran.hop_on.dto.LoginRequestDto;
 import com.kiran.hop_on.dto.LoginResponseDto;
 import com.kiran.hop_on.dto.RegisterRequestDto;
+import com.kiran.hop_on.enumType.Role;
+import com.kiran.hop_on.model.Driver;
+import com.kiran.hop_on.model.Rider;
 import com.kiran.hop_on.model.User;
+import com.kiran.hop_on.repository.DriverRepository;
+import com.kiran.hop_on.repository.RiderRepository;
 import com.kiran.hop_on.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,9 +20,12 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final RiderRepository riderRepository;
+    private final DriverRepository driverRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
+    @Transactional
     public void register(RegisterRequestDto request) {
 
         if(userRepository.findByPhone(request.getPhone()).isPresent()) {
@@ -30,7 +39,19 @@ public class AuthService {
                 .role(request.getRole())
                 .build();
 
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        if(request.getRole() == Role.RIDER){
+            Rider rider = new Rider();
+            rider.setUser(user);
+            riderRepository.save(rider);
+        }else if (request.getRole() == Role.DRIVER){
+            Driver driver = new Driver();
+            driver.setUser(user);
+            driver.setAvailable(true);
+            driver.setVehicle(request.getVehicle());
+            driverRepository.save(driver);
+        }
 
     }
 

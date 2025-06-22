@@ -26,7 +26,7 @@ public class JwtService {
 
     public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getId().toString())
+                .setSubject(String.valueOf(user.getId()))
                 .claim("role", user.getRole().name())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 1000)) // 5 mins
