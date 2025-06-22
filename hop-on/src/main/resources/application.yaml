@@ -25,5 +25,9 @@ spring:
     host: localhost
     port: 6379
 
+jwt:
+  secret: A3sR7!kG2@hN9%qXxL#zYc$W8MpUeRbF
+
+
 server:
   port: 8080
