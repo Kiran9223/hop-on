@@ -18,7 +18,12 @@ export default function LoginPage() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
       localStorage.setItem('role', data.role);
-      router.push('/dashboard'); 
+      localStorage.setItem('name', data.name);
+      if (data.role === 'DRIVER') {
+        router.push('/driver');
+      } else if (data.role === 'RIDER') {
+        router.push('/rider'); 
+      }
     } else {
       alert('Invalid credentials');
     }
