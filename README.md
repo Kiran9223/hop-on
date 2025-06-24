@@ -25,10 +25,21 @@ HopOn is a full-stack, event-driven ride-sharing platform that connects riders a
 - Responsive UI with Next.js 15 + Tailwind CSS
 - Map integration (e.g., Mapbox or Google Maps)
 
+### 📐 Architecture
+![image](https://github.com/user-attachments/assets/b5d7d594-90d5-4cc7-8440-a33ce9f13bc0)
+
+
 **Tech Stack:**
 - **Frontend:** Next.js 15, Tailwind CSS, Mapbox or Google Maps API
 - **Backend:** Spring Boot (Java), Kafka, Redis, PostgreSQL
 - **Event Bus:** Apache Kafka
 - **Cache:** Redis
 - **Authentication:** JWT + BCrypt password encoding
+
+**Future Enhancements:**
+- Add in-app notifications
+- Payment gateway integration
+- Admin dashboard
+- Rating system for riders and drivers
+
 
